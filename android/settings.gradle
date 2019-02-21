@@ -1,0 +1,3 @@
+rootProject.name = 'AppSync_Mutation_Test'
+
+include ':app'

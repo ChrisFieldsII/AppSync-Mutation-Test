@@ -1,0 +1,13 @@
+type Game @model {
+  id: ID!
+  name: String!
+  price: Int!
+  rating: GameRating!
+}
+
+enum GameRating {
+  EVERYONE
+  TEEN
+  MATURE
+  XXX
+}

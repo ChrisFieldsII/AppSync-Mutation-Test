@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "appsyncmutationtest-20190221085151-authRole",
+            "UnauthRoleArn": "arn:aws:iam::286568953053:role/appsyncmutationtest-20190221085151-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::286568953053:role/appsyncmutationtest-20190221085151-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "appsyncmutationtest-20190221085151-deployment",
+            "UnauthRoleName": "appsyncmutationtest-20190221085151-unauthRole",
+            "StackName": "appsyncmutationtest-20190221085151",
+            "StackId": "arn:aws:cloudformation:us-east-1:286568953053:stack/appsyncmutationtest-20190221085151/3958da80-35e8-11e9-8dca-12a109124258"
+        }
+    }
+}

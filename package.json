@@ -1,0 +1,29 @@
+{
+  "name": "AppSync_Mutation_Test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "aws-amplify": "^1.1.19",
+    "aws-appsync": "1.6.0",
+    "aws-appsync-react": "^1.2.6",
+    "faker": "^4.1.0",
+    "graphql-tag": "^2.10.1",
+    "react": "16.6.3",
+    "react-apollo": "^2.4.1",
+    "react-native": "0.58.5"
+  },
+  "devDependencies": {
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "24.1.0",
+    "jest": "24.1.0",
+    "metro-react-native-babel-preset": "0.52.0",
+    "react-test-renderer": "16.6.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

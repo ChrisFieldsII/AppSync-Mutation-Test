@@ -34,7 +34,7 @@ const client = new AWSAppSyncClient({
       }
     },
   },
-  disableOffline: true,
+  disableOffline: false,
 });
 
 const Index = () => (

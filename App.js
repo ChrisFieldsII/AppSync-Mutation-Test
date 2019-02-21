@@ -1,60 +1,15 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ScrollView, SafeAreaView } from 'react-native';
 import { graphqlMutation } from 'aws-appsync-react';
 import { buildSubscription } from 'aws-appsync';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import faker from 'faker';
 
+import styles from './styles';
 import { listGames } from './src/graphql/queries';
 import { createGame } from './src/graphql/mutations';
 import { onCreateGame } from './src/graphql/subscriptions';
-
-const { width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-  },
-  gameCell: {
-    height: 60,
-    width: width - 32,
-    elevation: 2,
-    borderRadius: 14,
-    backgroundColor: 'lightgrey',
-    padding: 8,
-    marginBottom: 10,
-  },
-  createGameBtn: {
-    height: 40,
-    width: width - 32,
-    backgroundColor: 'teal',
-    borderRadius: 20,
-  },
-  namePriceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  gameList: {
-    marginBottom: 20,
-  },
-  btnText: {
-    textAlign: 'center',
-    color: 'white',
-    marginTop: 5,
-  },
-});
 
 const renderGame = ({ item: game }) => {
   const { id, name, price, rating } = game;

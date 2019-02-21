@@ -15,42 +15,11 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import faker from 'faker';
 
+import { listGames } from './src/graphql/queries';
+import { createGame } from './src/graphql/mutations';
+import { onCreateGame } from './src/graphql/subscriptions';
+
 const { width } = Dimensions.get('window');
-
-const LIST_GAMES = gql`
-  query listGames {
-    listGames {
-      items {
-        id
-        name
-        price
-        rating
-      }
-    }
-  }
-`;
-
-const CREATE_GAME = gql`
-  mutation createGame($name: String!, $price: Int!, $rating: GameRating!) {
-    createGame(input: { name: $name, price: $price, rating: $rating }) {
-      id
-      name
-      price
-      rating
-    }
-  }
-`;
-
-const CREATE_GAME_SUB = gql`
-  subscription createGameSub {
-    onCreateGame {
-      id
-      name
-      price
-      rating
-    }
-  }
-`;
 
 const styles = StyleSheet.create({
   container: {
@@ -103,14 +72,14 @@ const renderGame = ({ item: game }) => {
 };
 
 const RATINGS = ['EVERYONE', 'TEEN', 'MATURE', 'XXX'];
-const PRICES = [5,12,20,30.99, 59.99]
+const PRICES = [5, 12, 20, 30, 60];
 const onCreateGameOnPress = async createGame => {
-  const variables = {
+  const input = {
     name: faker.fake('{{random.word}}'),
     price: PRICES[Math.floor(Math.random() * PRICES.length)],
     rating: RATINGS[Math.floor(Math.random() * RATINGS.length)],
   };
-  await createGame({ variables });
+  await createGame({ variables: { input } });
 };
 
 const App = ({ data, createGame }) => {
@@ -119,7 +88,7 @@ const App = ({ data, createGame }) => {
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>{`Error! ${error.message}`}</Text>;
 
-  subscribeToMore(buildSubscription(CREATE_GAME_SUB, LIST_GAMES));
+  subscribeToMore(buildSubscription(gql(onCreateGame), gql(listGames)));
 
   return (
     <SafeAreaView style={styles.container}>
@@ -142,6 +111,6 @@ const App = ({ data, createGame }) => {
 };
 
 export default compose(
-  graphql(LIST_GAMES),
-  graphqlMutation(CREATE_GAME, LIST_GAMES, 'Game'),
+  graphql(gql(listGames)),
+  graphqlMutation(gql(createGame), gql(listGames), 'Game'),
 )(App);

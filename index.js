@@ -3,12 +3,14 @@ import { AppRegistry, AsyncStorage, Alert } from 'react-native';
 import Amplify from 'aws-amplify';
 import { ApolloProvider } from 'react-apollo';
 import { Rehydrated } from 'aws-appsync-react';
-import AWSAppSyncClient from 'aws-appsync';
+import AWSAppSyncClient, { buildSync } from 'aws-appsync';
+import gql from 'graphql-tag';
 
 import App from './App';
 import { name as appName } from './app.json';
 import AppSyncConfig from './aws-exports';
 import DevMenuTrigger from './DevMenuTrigger';
+import { listGames } from './src/graphql/queries';
 
 Amplify.configure(AppSyncConfig);
 
@@ -26,15 +28,24 @@ const client = new AWSAppSyncClient({
       if (err) {
         const { mutation, variables } = err;
 
-        Alert.alert(`ERROR for ${mutation}`, err);
+        Alert.alert(`Offline Callback Error`, JSON.stringify(err));
       } else {
         const { mutation, variables } = succ;
 
-        Alert.alert(`SUCCESS for ${mutation}`, succ);
+        Alert.alert(`Offline Callback Success`, JSON.stringify(succ));
       }
     },
   },
   disableOffline: false,
+});
+
+client.hydrated().then(() => {
+  console.log('client is hydrated');
+  client.sync(
+    buildSync('Game', {
+      baseQuery: gql(listGames),
+    }),
+  );
 });
 
 const Index = () => (

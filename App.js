@@ -66,6 +66,6 @@ const App = ({ data, createGame }) => {
 };
 
 export default compose(
-  graphql(gql(listGames)),
+  graphql(gql(listGames), { options: { fetchPolicy: 'cache' } }),
   graphqlMutation(gql(createGame), gql(listGames), 'Game'),
 )(App);
